@@ -2,6 +2,8 @@ import pytube
 import os
 import sys
 import eyed3
+from moviepy.editor import *
+import shutil
 
 def getUrls(playlist_url):
     urls = []
@@ -9,26 +11,32 @@ def getUrls(playlist_url):
     playlist_name = playlist_videos.title
     for url in playlist_videos:
         urls.append(url)
-    
     return urls, playlist_name
+
+def download_youtube_audio(video_url, output_path):
+  """Downloads the audio of a YouTube video as an MP3 file to the specified output path.
+
+  Args:
+    video_url: The URL of the YouTube video to download.
+    output_path: The path to the output MP3 file.
+  """
+
+  youtube = pytube.YouTube(video_url)
+  audio_stream = youtube.streams.get_audio_only()
+  audio_stream.download(filename=output_path)
 
 def getMP3fromLink(video_link, playlist_name = "", destination=r"C:\Users\shash\Downloads\prisha"):
     youtube_vid = pytube.YouTube(video_link)
-    video = youtube_vid.streams.filter(only_audio=True).first()
-    out_file = video.download(output_path=destination)
-    base,ext = os.path.splitext(out_file)
-    new_file = base + '.mp3'
-    os.rename(out_file,new_file)
-    try:
-        track = eyed3.load(new_file)
-        track.initTag()
-        track.tag.title = youtube_vid.title
-        track.tag.artist = youtube_vid.author.replace('VEVO', '')
-        track.tag.album = playlist_name 
-        track.tag.save(version=(1,None,None))
-        track.tag.save()
-    except:
-        print("\tNo metadata found")
+    download_youtube_audio(video_link, os.path.join(destination,f"{youtube_vid.title.strip()}.mp3"))
+    #try:    
+    #    track = eyed3.load(out_mp3)
+    #    track.initTag()
+    #    track.tag.title = youtube_vid.title.replace('VEVO', '').replace('Official', '').replace('Lyric', '').replace('Video', '')
+    #    track.tag.artist = youtube_vid.author.replace('VEVO', '').replace('Official', '').replace('Lyric', '').replace('Video', '')
+    #    track.tag.album = playlist_name 
+    #    track.tag.save(version=(1,None,None))
+    #except:
+    #    print("\tNo metadata found")
     print(youtube_vid.title + " is downloaded")
 
 def getMP4fromLink(video_link, SAVE_PATH=r"C:\shashg\Downloads\test_mp4"):
@@ -49,5 +57,9 @@ if __name__ == '__main__' :
         destination = r"C:\Users\shash\Downloads\prish"
     urls, playlist_name = getUrls(playlist_url)
     for url in urls:
-        getMP3fromLink(url, playlist_name, destination)
+        try:
+            getMP3fromLink(url, playlist_name, destination)
+        except Exception as err:
+            print(f"\tError with {pytube.YouTube(url).title}-> {err}")
+            continue
     print("Done")
