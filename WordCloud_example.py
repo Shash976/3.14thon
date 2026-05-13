@@ -10,10 +10,6 @@
 from wordcloud import WordCloud
 import numpy as np
 from matplotlib import pyplot as plt
-from IPython.display import display
-import fileupload
-import io
-import sys
 
 file_contents = "\"Well, maybe a little. But I didn't, because I thought-I didn't want things to stay the same for eternity, because things could always get better. And I was thinking . . .\" My throat felt really dry. \"Anyone in particular?\" Annabeth asked, her voice soft. I looked over and saw that she was trying not to smile. \"You're laughing at me,\" I complained. \"I am not!\" \"You are so not making this easy.\" Then she laughed for real, and she put her hands around my neck. \"I am never, ever going to make things easy for you, Seaweed Brain. Get used to it.\" When she kissed me, I had the feeling my brain was melting right through my body. I could've stayed that way forever, except a voice behind us growled, \"Well, it's about time!\" Suddenly the pavilion was filled with torchlight and campers. Clarisse led the way as the eavesdroppers charged and hoisted us both onto their shoulders. \"Oh, come on!\" I complained. \"Is there no privacy?\" \"The lovebirds need to cool off!\" Clarisse said with glee. \"The canoe lake!\" Connor Stoll shouted. With a huge cheer, they carried us down the hill, but they kept us close enough to hold hands. Annabeth was laughing, and I couldn't help laughing too, even though my face was completely red. We held hands right up to the moment they dumped us in the water. Afterward, I had the last laugh. I made an air bubble at the bottom of the lake. Our friends kept waiting for us to come up, but hey-when you're the son of Poseidon, you don't have to hurry. And it was pretty much the best underwater kiss of all time"
 
